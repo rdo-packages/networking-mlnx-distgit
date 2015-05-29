@@ -39,10 +39,10 @@ This package contains %{vendor} networking driver for OpenStack Neutron.
 rm %{docpath}/.buildinfo
 
 %install
-install -d -m 755 %{buildroot}%{_sysconfdir}/neutron
 export PBR_VERSION=%{version}
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py install --skip-build --root $RPM_BUILD_ROOT
+install -d -m 755 %{buildroot}%{_sysconfdir}/neutron/plugins/ml2
 mv %{buildroot}/usr/etc/neutron/plugins/ml2/ml2_conf_sdn.ini %{buildroot}%{_sysconfdir}/neutron/plugins/ml2
 
 # Remove unused files
@@ -55,4 +55,3 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %{python2_sitelib}/%{srcname}
 %{python2_sitelib}/%{srcname}-%{version}-py%{python2_version}.egg-info
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ml2/ml2_conf_sdn.ini
-
