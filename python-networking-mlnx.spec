@@ -1,4 +1,4 @@
-%global vendor Mellanox
+%global drv_vendor Mellanox
 %global srcname networking_mlnx
 %global package_name networking-mlnx
 %global docpath doc/build/html
@@ -6,7 +6,7 @@
 Name:           python-%{package_name}
 Version:        2015.1.2
 Release:        1%{?dist}
-Summary:        %{vendor} OpenStack Neutron driver
+Summary:        %{drv_vendor} OpenStack Neutron driver
 
 License:        ASL 2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
@@ -28,7 +28,7 @@ Requires:       python-pbr
 Requires:       openstack-neutron-common
 
 %description
-This package contains %{vendor} networking driver for OpenStack Neutron.
+This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 
 %prep
 %setup -q -n %{package_name}-%{upstream_version}
