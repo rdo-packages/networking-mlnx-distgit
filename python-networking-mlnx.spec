@@ -2,15 +2,18 @@
 %global srcname networking_mlnx
 %global package_name networking-mlnx
 %global docpath doc/build/html
+%global service neutron
 
 Name:           python-%{package_name}
-Version:        2015.1.2
+Version:        2016.1.1
 Release:        1%{?dist}
 Summary:        %{drv_vendor} OpenStack Neutron driver
+Obsoletes:      openstack-%{service}-mellanox
 
 License:        ASL 2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
 Source0:        https://pypi.python.org/packages/source/n/%{package_name}/%{package_name}-%{version}.tar.gz
+Source1:         %{service}-mlnx-agent.service
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -25,7 +28,7 @@ BuildRequires:  python-testtools
 
 Requires:       python-babel
 Requires:       python-pbr
-Requires:       openstack-neutron-common
+Requires:       openstack-%{service}-common
 
 %description
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
@@ -42,11 +45,30 @@ rm %{docpath}/.buildinfo
 export PBR_VERSION=%{version}
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py install --skip-build --root %{buildroot}
-install -d -m 755 %{buildroot}%{_sysconfdir}/neutron/plugins/ml2
-mv %{buildroot}/usr/etc/neutron/plugins/ml2/ml2_conf_sdn.ini %{buildroot}%{_sysconfdir}/neutron/plugins/ml2
+
+mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
+
+install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
+mv %{buildroot}/usr/etc/%{service}/plugins/mlnx %{buildroot}%{_sysconfdir}/%{service}/plugins/
+mv %{buildroot}/usr/etc/%{service}/plugins/ml2/ml2_conf_sdn.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
+
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/%{service}-mlnx-agent.service
+
 
 # Remove unused files
 rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
+
+
+%post
+%systemd_post %{service}-mlnx-agent.service
+
+
+%preun
+%systemd_preun %{service}-mlnx-agent.service
+
+
+%postun
+%systemd_postun_with_restart %{service}-mlnx-agent.service
 
 %files
 %license LICENSE
@@ -54,4 +76,10 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %doc %{docpath}
 %{python2_sitelib}/%{srcname}
 %{python2_sitelib}/%{srcname}-%{version}-py%{python2_version}.egg-info
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ml2/ml2_conf_sdn.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/ml2_conf_sdn.ini
+%{_bindir}/%{service}-mlnx-agent
+%{_unitdir}/%{service}-mlnx-agent.service
+
+%dir %{_sysconfdir}/%{service}/plugins/mlnx
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*.ini
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
