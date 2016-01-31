@@ -15,7 +15,6 @@ URL:            https://pypi.python.org/pypi/%{package_name}
 Source0:        https://pypi.python.org/packages/source/n/%{package_name}/%{package_name}-%{version}.tar.gz
 Source1:        %{service}-mlnx-agent.service
 Source2:        eswitchd.service
-Source3:        eswitch-sudoers
 
 
 BuildArch:      noarch
@@ -55,17 +54,13 @@ mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/rootwrap.d
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/mlnx
-install -d -m 755 %{buildroot}%{_sysconfdir}/sudoers.d/
 install -d -m 755 %{buildroot}%{_sysconfdir}/rootwrap.d/
-
-mv %{buildroot}/usr/etc/%{service}/plugins/mlnx/* %{buildroot}%{_sysconfdir}/%{service}/plugins/mlnx/
-mv %{buildroot}/usr/etc/%{service}/plugins/ml2/* %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2/
-mv %{buildroot}/usr/etc/%{service}/eswitchd-rootwrap.conf %{buildroot}%{_sysconfdir}/%{service}/
-mv %{buildroot}/usr/etc/%{service}/rootwrap.d/* %{buildroot}%{_sysconfdir}/%{service}/rootwrap.d/
-
+install -p -D -m 640 etc/%{service}/plugins/ml2/ml2_conf_sdn.ini  %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
+install -p -D -m 640 etc/%{service}/plugins/ml2/eswitchd.conf %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
+install -p -D -m 640 etc/%{service}/plugins/mlnx/mlnx_conf.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/mlnx
+install -p -D -m 640 etc/%{service}/rootwrap.d/eswitchd.filters %{buildroot}%{_sysconfdir}/%{service}/rootwrap.d/
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/%{service}-mlnx-agent.service
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/eswitchd.service
-install -p -D -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/sudoers.d/eswitch-sudoers
 
 
 # Remove unused files
@@ -107,8 +102,6 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
 %dir %{_sysconfdir}/%{service}/conf.d/eswitchd
 
-%attr(0640, root, %{service}) /etc/sudoers.d/eswitch-sudoers
-%attr(0640, root, %{service}) /etc/neutron/eswitchd-rootwrap.conf
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
