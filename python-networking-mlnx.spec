@@ -96,7 +96,6 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %{_bindir}/eswitchd
 %{_unitdir}/eswitchd.service
 %{_bindir}/ebrctl
-%{_bindir}/eswitchd-rootwrap
 
 %dir %{_sysconfdir}/%{service}/plugins/mlnx
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
