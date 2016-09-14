@@ -1,3 +1,4 @@
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global drv_vendor Mellanox
 %global srcname networking_mlnx
 %global package_name networking-mlnx
