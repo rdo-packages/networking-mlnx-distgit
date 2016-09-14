@@ -12,7 +12,7 @@ Obsoletes:      openstack-%{service}-mellanox
 
 License:        ASL 2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
-Source0:        https://pypi.python.org/packages/source/n/%{package_name}/%{package_name}-%{version}.tar.gz
+Source0:        https://tarballs.openstack.org/%{package_name}/%{package_name}-%{version}.tar.gz
 Source1:        %{service}-mlnx-agent.service
 Source2:        eswitchd.service
 
