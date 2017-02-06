@@ -30,7 +30,9 @@ BuildRequires:  python-testrepository
 BuildRequires:  python-testtools
 
 Requires:       python-babel
+Requires:       python-lxml
 Requires:       python-pbr
+Requires:       python-zmq
 Requires:       openstack-%{service}-common
 
 %description
