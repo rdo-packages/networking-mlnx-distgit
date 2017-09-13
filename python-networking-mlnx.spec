@@ -28,6 +28,8 @@ BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx
 BuildRequires:  python-testrepository
 BuildRequires:  python-testtools
+BuildRequires:  systemd
+%{?systemd_requires}
 
 Requires:       python-babel
 Requires:       python-lxml
