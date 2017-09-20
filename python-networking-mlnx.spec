@@ -31,10 +31,23 @@ BuildRequires:  python-testtools
 BuildRequires:  systemd
 %{?systemd_requires}
 
-Requires:       python-babel
+Requires:       python-alembic
+Requires:       python-eventlet
 Requires:       python-lxml
+Requires:       python-netaddr
+Requires:       python-neutron-lib >= 1.1.0
+Requires:       python-neutronclient >= 5.1.0
+Requires:       python-oslo-config >= 2:3.14.0
+Requires:       python-oslo-i18n >= 2.1.0
+Requires:       python-oslo-log >= 3.11.0
+Requires:       python-oslo-messaging >= 5.14.0
+Requires:       python-oslo-serialization >= 1.10.0
+Requires:       python-oslo-utils >= 3.18.0
+Requires:       python-openstackclient >= 3.3.0
 Requires:       python-pbr
-Requires:       python-zmq
+Requires:       python-six
+Requires:       python-sqlalchemy
+Requires:       python-stevedore
 Requires:       openstack-%{service}-common
 
 %description
