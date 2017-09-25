@@ -6,8 +6,8 @@
 %global service neutron
 
 Name:           python-%{package_name}
-Version:        XXX
-Release:        XXX
+Version:        11.0.0
+Release:        1%{?dist}
 Summary:        %{drv_vendor} OpenStack Neutron driver
 Obsoletes:      openstack-%{service}-mellanox
 
@@ -123,3 +123,6 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
+* Mon Sep 25 2017 Alfredo Moralejo <amoralej@redhat.com> 11.0.0-1
+- Update to 11.0.0
+
