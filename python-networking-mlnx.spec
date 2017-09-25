@@ -6,14 +6,14 @@
 %global service neutron
 
 Name:           python-%{package_name}
-Version:        XXX
-Release:        XXX
+Version:        11.0.0
+Release:        1%{?dist}
 Summary:        %{drv_vendor} OpenStack Neutron driver
 Obsoletes:      openstack-%{service}-mellanox
 
 License:        ASL 2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
-Source0:        https://pypi.io/packages/source/n/%{package_name}/%{package_name}-%{upstream_version}.tar.gz
+Source0:        https://github.com/openstack/%{package_name}/archive/%{upstream_version}.tar.gz
 Source1:        %{service}-mlnx-agent.service
 Source2:        eswitchd.service
 
@@ -123,3 +123,6 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
+* Mon Sep 25 2017 Alfredo Moralejo <amoralej@redhat.com> 11.0.0-1
+- Update to 11.0.0
+
