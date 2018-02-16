@@ -20,34 +20,33 @@ Source2:        eswitchd.service
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
-BuildRequires:  python-mock
+BuildRequires:  python2-mock
 BuildRequires:  python-neutron-tests
-BuildRequires:  python-oslo-sphinx
-BuildRequires:  python-pbr
-BuildRequires:  python-setuptools
-BuildRequires:  python-sphinx
-BuildRequires:  python-testrepository
-BuildRequires:  python-testtools
+BuildRequires:  python2-oslo-sphinx
+BuildRequires:  python2-pbr
+BuildRequires:  python2-setuptools
+BuildRequires:  python2-sphinx
+BuildRequires:  python2-testrepository
+BuildRequires:  python2-testtools
 BuildRequires:  systemd
 %{?systemd_requires}
 
-Requires:       python-alembic
-Requires:       python-eventlet
+Requires:       python2-alembic
+Requires:       python2-eventlet
 Requires:       python-lxml
-Requires:       python-netaddr
-Requires:       python-neutron-lib >= 1.1.0
-Requires:       python-neutronclient >= 5.1.0
-Requires:       python-oslo-config >= 2:3.14.0
-Requires:       python-oslo-i18n >= 2.1.0
-Requires:       python-oslo-log >= 3.11.0
-Requires:       python-oslo-messaging >= 5.14.0
-Requires:       python-oslo-serialization >= 1.10.0
-Requires:       python-oslo-utils >= 3.18.0
-Requires:       python-openstackclient >= 3.3.0
-Requires:       python-pbr
-Requires:       python-six
-Requires:       python-sqlalchemy
-Requires:       python-stevedore
+Requires:       python2-netaddr
+Requires:       python-neutron-lib >= 1.7.0
+Requires:       python2-neutronclient >= 5.1.0
+Requires:       python2-oslo-config >= 2:3.22.0
+Requires:       python2-oslo-i18n >= 2.1.0
+Requires:       python2-oslo-log >= 3.22.0
+Requires:       python2-oslo-messaging >= 5.19.0
+Requires:       python2-oslo-serialization >= 1.10.0
+Requires:       python2-oslo-utils >= 3.20.0
+Requires:       python2-openstackclient >= 3.3.0
+Requires:       python2-six
+Requires:       python2-sqlalchemy
+Requires:       python2-stevedore
 Requires:       python-zmq
 Requires:       openstack-%{service}-common
 
