@@ -1,3 +1,4 @@
+%global milestone .0b1
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global drv_vendor Mellanox
 %global srcname networking_mlnx
@@ -6,14 +7,18 @@
 %global service neutron
 
 Name:           python-%{package_name}
-Version:        XXX
-Release:        XXX
+Version:        9.0.0
+Release:        0.1%{?milestone}%{?dist}
 Summary:        %{drv_vendor} OpenStack Neutron driver
 Obsoletes:      openstack-%{service}-mellanox
 
 License:        ASL 2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
-Source0:        https://pypi.io/packages/source/n/%{package_name}/%{package_name}-%{upstream_version}.tar.gz
+Source0:        https://github.com/openstack/%{package_name}/archive/%{upstream_version}.tar.gz#/%{package_name}-%{upstream_version}.tar.gz
+#
+# patches_base=9.0.0.0b1
+#
+
 Source1:        %{service}-mlnx-agent.service
 Source2:        eswitchd.service
 
@@ -122,3 +127,6 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
+* Tue Aug 28 2018 RDO <dev@lists.rdoproject.org> 9.0.0-0.1.0b1
+- Update to 9.0.0.0b1
+
