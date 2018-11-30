@@ -40,7 +40,11 @@ BuildRequires:  python%{pyver}-sphinx
 BuildRequires:  python%{pyver}-testrepository
 BuildRequires:  python%{pyver}-testtools
 BuildRequires:  systemd
+%if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
+%else
+%{?systemd_ordering} # does not exist on EL7
+%endif
 
 %description
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
