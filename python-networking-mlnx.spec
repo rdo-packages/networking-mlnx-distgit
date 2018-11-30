@@ -29,7 +29,11 @@ BuildRequires:  python2-sphinx
 BuildRequires:  python2-testrepository
 BuildRequires:  python2-testtools
 BuildRequires:  systemd
+%if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
+%else
+%{?systemd_ordering} # does not exist on EL7
+%endif
 
 Requires:       python2-alembic
 Requires:       python2-eventlet
