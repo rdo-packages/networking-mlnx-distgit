@@ -1,3 +1,14 @@
+# Macros for py2/py3 compatibility
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global pyver %{python3_pkgversion}
+%else
+%global pyver 2
+%endif
+%global pyver_bin python%{pyver}
+%global pyver_sitelib %python%{pyver}_sitelib
+%global pyver_install %py%{pyver}_install
+%global pyver_build %py%{pyver}_build
+# End of macros for py2/py3 compatibility
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global drv_vendor Mellanox
 %global srcname networking_mlnx
@@ -19,52 +30,65 @@ Source2:        eswitchd.service
 
 
 BuildArch:      noarch
-BuildRequires:  python2-devel
-BuildRequires:  python2-mock
-BuildRequires:  python-neutron-tests
-BuildRequires:  python2-oslo-sphinx
-BuildRequires:  python2-pbr
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-sphinx
-BuildRequires:  python2-testrepository
-BuildRequires:  python2-testtools
+BuildRequires:  python%{pyver}-devel
+BuildRequires:  python%{pyver}-mock
+BuildRequires:  python%{pyver}-neutron-tests
+BuildRequires:  python%{pyver}-oslo-sphinx
+BuildRequires:  python%{pyver}-pbr
+BuildRequires:  python%{pyver}-setuptools
+BuildRequires:  python%{pyver}-sphinx
+BuildRequires:  python%{pyver}-testrepository
+BuildRequires:  python%{pyver}-testtools
 BuildRequires:  systemd
 %{?systemd_requires}
 
-Requires:       python2-alembic
-Requires:       python2-eventlet
-Requires:       python-lxml
-Requires:       python2-netaddr
-Requires:       python-neutron-lib >= 1.7.0
-Requires:       python2-neutronclient >= 5.1.0
-Requires:       python2-oslo-config >= 2:3.22.0
-Requires:       python2-oslo-i18n >= 2.1.0
-Requires:       python2-oslo-log >= 3.22.0
-Requires:       python2-oslo-messaging >= 5.19.0
-Requires:       python2-oslo-serialization >= 1.10.0
-Requires:       python2-oslo-utils >= 3.20.0
-Requires:       python2-openstackclient >= 3.3.0
-Requires:       python2-six
-Requires:       python2-sqlalchemy
-Requires:       python2-stevedore
-Requires:       python-zmq
+%description
+This package contains %{drv_vendor} networking driver for OpenStack Neutron.
+
+%package -n python%{pyver}-%{package_name}
+Summary: Mellanox OpenStack Neutron driver
+%{?python_provide:%python_provide python%{pyver}-%{pypi_name}}
+
+Requires:       python%{pyver}-alembic
+Requires:       python%{pyver}-eventlet
+Requires:       python%{pyver}-netaddr
+Requires:       python%{pyver}-neutron-lib >= 1.7.0
+Requires:       python%{pyver}-neutronclient >= 5.1.0
+Requires:       python%{pyver}-oslo-config >= 2:3.22.0
+Requires:       python%{pyver}-oslo-i18n >= 2.1.0
+Requires:       python%{pyver}-oslo-log >= 3.22.0
+Requires:       python%{pyver}-oslo-messaging >= 5.19.0
+Requires:       python%{pyver}-oslo-serialization >= 1.10.0
+Requires:       python%{pyver}-oslo-utils >= 3.20.0
+Requires:       python%{pyver}-openstackclient >= 3.3.0
+Requires:       python%{pyver}-six
+Requires:       python%{pyver}-sqlalchemy
+Requires:       python%{pyver}-stevedore
 Requires:       openstack-%{service}-common
 
-%description
+# Handle python2 exception
+%if %{pyver} == 2
+Requires:       python-lxml
+Requires:       python-zmq
+%else
+Requires:       python%{pyver}-lxml
+Requires:       python%{pyver}-zmq
+%endif
+
+%description -n python%{pyver}-%{package_name}
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 
 %prep
 %setup -q -n %{package_name}-%{upstream_version}
 
 %build
-%{__python2} setup.py build
-%{__python2} setup.py build_sphinx
+%{pyver_build}
+%{pyver_bin} setup.py build_sphinx
 rm %{docpath}/.buildinfo
 
 %install
 export PBR_VERSION=%{version}
-export SKIP_PIP_INSTALL=1
-%{__python2} setup.py install --skip-build --root %{buildroot}
+%{pyver_install}
 
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/eswitchd
@@ -104,8 +128,8 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %license LICENSE
 %doc README.rst
 %doc %{docpath}
-%{python2_sitelib}/%{srcname}
-%{python2_sitelib}/%{srcname}-%{version}-py%{python2_version}.egg-info
+%{pyver_sitelib}/%{srcname}
+%{pyver_sitelib}/%{srcname}-%{version}-*.egg-info
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*
 
