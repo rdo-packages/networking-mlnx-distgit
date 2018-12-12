@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9abe1de1_53b82ee5",
+        "filename": "python-networking-mlnx.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2018-12-12T15:31:00Z",
+      "side": 1,
+      "message": "package_name",
+      "range": {
+        "startLine": 50,
+        "startChar": 51,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "ca691bbc27d68d29955a7513da2931fffb9d3aaf",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9abe1de1_33d01a1f",
+        "filename": "python-networking-mlnx.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2018-12-12T15:31:00Z",
+      "side": 1,
+      "message": "-n python%{pyver}-%{package_name}",
+      "revId": "ca691bbc27d68d29955a7513da2931fffb9d3aaf",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
