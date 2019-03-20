@@ -22,6 +22,30 @@
       "revId": "36754b2b2aa13616b6a68641f6859bc227b2808c",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7801cea_84cbb37f",
+        "filename": "python-networking-mlnx.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 534
+      },
+      "writtenOn": "2019-03-20T10:41:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5248d10_c3fbe1d6",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "36754b2b2aa13616b6a68641f6859bc227b2808c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
