@@ -122,3 +122,4 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/networking-mlnx/commit/?id=d0f7abaa16e942bb97f73daa0fa12dd1984ead57
