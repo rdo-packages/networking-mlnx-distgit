@@ -33,6 +33,7 @@ BuildArch:      noarch
 BuildRequires:  python%{pyver}-devel
 BuildRequires:  python%{pyver}-mock
 BuildRequires:  python%{pyver}-neutron-tests
+BuildRequires:  python%{pyver}-oslo-concurrency
 BuildRequires:  python%{pyver}-oslo-sphinx
 BuildRequires:  python%{pyver}-pbr
 BuildRequires:  python%{pyver}-setuptools
@@ -53,31 +54,24 @@ This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 Summary: Mellanox OpenStack Neutron driver
 %{?python_provide:%python_provide python%{pyver}-%{package_name}}
 
-Requires:       python%{pyver}-alembic >= 0.8.10
 Requires:       python%{pyver}-babel >= 1.3
+Requires:       python%{pyver}-defusedxml >= 0.5.0
 Requires:       python%{pyver}-eventlet >= 0.18.2
-Requires:       python%{pyver}-netaddr >= 0.7.13
-Requires:       python%{pyver}-neutron-lib >= 1.7.0
+Requires:       python%{pyver}-netaddr >= 0.7.18
+Requires:       python%{pyver}-neutron-lib >= 1.28.0
 Requires:       python%{pyver}-neutronclient >= 5.1.0
-Requires:       python%{pyver}-oslo-config >= 2:3.22.0
-Requires:       python%{pyver}-oslo-i18n >= 2.1.0
-Requires:       python%{pyver}-oslo-log >= 3.22.0
-Requires:       python%{pyver}-oslo-messaging >= 5.19.0
-Requires:       python%{pyver}-oslo-serialization >= 1.10.0
-Requires:       python%{pyver}-oslo-utils >= 3.20.0
+Requires:       python%{pyver}-oslo-concurrency >= 3.26.0
+Requires:       python%{pyver}-oslo-config >= 2:5.2.0
 Requires:       python%{pyver}-openstackclient >= 3.3.0
 Requires:       python%{pyver}-pbr >= 2.0.0
-Requires:       python%{pyver}-six >= 1.9.0
+Requires:       python%{pyver}-six >= 1.10.0
 Requires:       python%{pyver}-sqlalchemy >= 1.0.10
-Requires:       python%{pyver}-stevedore >= 1.20.0
-Requires:       openstack-%{service}-common >= 1:12.0.0
+Requires:       openstack-%{service}-common >= 1:13.0.0b2
 
 # Handle python2 exception
 %if %{pyver} == 2
-Requires:       python-lxml
 Requires:       python-zmq
 %else
-Requires:       python%{pyver}-lxml
 Requires:       python%{pyver}-zmq
 %endif
 
