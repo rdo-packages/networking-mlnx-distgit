@@ -17,8 +17,8 @@
 %global service neutron
 
 Name:           python-%{package_name}
-Version:        XXX
-Release:        XXX
+Version:        15.0.1
+Release:        1%{?dist}
 Summary:        %{drv_vendor} OpenStack Neutron driver
 Obsoletes:      openstack-%{service}-mellanox
 
@@ -89,8 +89,10 @@ This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 
 %build
 %{pyver_build}
+%if %{pyver} == 2
 %{pyver_bin} setup.py build_sphinx
 rm %{docpath}/.buildinfo
+%endif
 
 %install
 export PBR_VERSION=%{version}
@@ -133,7 +135,9 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %files -n python%{pyver}-%{package_name}
 %license LICENSE
 %doc README.rst
+%if %{pyver} == 2
 %doc %{docpath}
+%endif
 %{pyver_sitelib}/%{srcname}
 %{pyver_sitelib}/%{srcname}-%{version}-*.egg-info
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*
@@ -152,3 +156,6 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
+* Thu Dec 12 2019 Alfredo Moralejo <amoralej@redhat.com> 15.0.1-1
+- Update to 15.0.1
+
