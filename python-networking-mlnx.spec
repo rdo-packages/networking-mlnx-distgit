@@ -5,9 +5,9 @@
 %global pyver 2
 %endif
 %global pyver_bin python%{pyver}
-%global pyver_sitelib %python%{pyver}_sitelib
-%global pyver_install %py%{pyver}_install
-%global pyver_build %py%{pyver}_build
+%global pyver_sitelib %{expand:%{python%{pyver}_sitelib}}
+%global pyver_install %{expand:%{py%{pyver}_install}}
+%global pyver_build %{expand:%{py%{pyver}_build}}
 # End of macros for py2/py3 compatibility
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global drv_vendor Mellanox
@@ -114,7 +114,7 @@ install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/eswitchd.service
 
 
 # Remove unused files
-rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
+rm -rf %{buildroot}%{pyver_sitelib}/networking_mlnx/hacking
 
 
 %post
