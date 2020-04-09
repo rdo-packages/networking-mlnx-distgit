@@ -1,14 +1,3 @@
-# Macros for py2/py3 compatibility
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global pyver %{python3_pkgversion}
-%else
-%global pyver 2
-%endif
-%global pyver_bin python%{pyver}
-%global pyver_sitelib %python%{pyver}_sitelib
-%global pyver_install %py%{pyver}_install
-%global pyver_build %py%{pyver}_build
-# End of macros for py2/py3 compatibility
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global drv_vendor Mellanox
 %global srcname networking_mlnx
@@ -30,15 +19,15 @@ Source2:        eswitchd.service
 
 
 BuildArch:      noarch
-BuildRequires:  python%{pyver}-devel
-BuildRequires:  python%{pyver}-mock
-BuildRequires:  python%{pyver}-neutron-tests
-BuildRequires:  python%{pyver}-oslo-sphinx
-BuildRequires:  python%{pyver}-pbr
-BuildRequires:  python%{pyver}-setuptools
-BuildRequires:  python%{pyver}-sphinx
-BuildRequires:  python%{pyver}-testrepository
-BuildRequires:  python%{pyver}-testtools
+BuildRequires:  python3-devel
+BuildRequires:  python3-mock
+BuildRequires:  python3-neutron-tests
+BuildRequires:  python3-oslo-sphinx
+BuildRequires:  python3-pbr
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-sphinx
+BuildRequires:  python3-testrepository
+BuildRequires:  python3-testtools
 BuildRequires:  systemd
 %if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
@@ -49,52 +38,42 @@ BuildRequires:  systemd
 %description
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 
-%package -n python%{pyver}-%{package_name}
+%package -n python3-%{package_name}
 Summary: Mellanox OpenStack Neutron driver
-%{?python_provide:%python_provide python%{pyver}-%{package_name}}
+%{?python_provide:%python_provide python3-%{package_name}}
 
-Requires:       python%{pyver}-alembic >= 0.8.10
-Requires:       python%{pyver}-babel >= 1.3
-Requires:       python%{pyver}-eventlet >= 0.18.2
-Requires:       python%{pyver}-netaddr >= 0.7.13
-Requires:       python%{pyver}-neutron-lib >= 1.7.0
-Requires:       python%{pyver}-neutronclient >= 5.1.0
-Requires:       python%{pyver}-oslo-config >= 2:3.22.0
-Requires:       python%{pyver}-oslo-i18n >= 2.1.0
-Requires:       python%{pyver}-oslo-log >= 3.22.0
-Requires:       python%{pyver}-oslo-messaging >= 5.19.0
-Requires:       python%{pyver}-oslo-serialization >= 1.10.0
-Requires:       python%{pyver}-oslo-utils >= 3.20.0
-Requires:       python%{pyver}-openstackclient >= 3.3.0
-Requires:       python%{pyver}-pbr >= 2.0.0
-Requires:       python%{pyver}-six >= 1.9.0
-Requires:       python%{pyver}-sqlalchemy >= 1.0.10
-Requires:       python%{pyver}-stevedore >= 1.20.0
-Requires:       openstack-%{service}-common >= 1:12.0.0
+Requires:       python3-babel >= 1.3
+Requires:       python3-eventlet >= 0.18.2
+Requires:       python3-netaddr >= 0.7.18
+Requires:       python3-neutron-lib >= 1.28.0
+Requires:       python3-neutronclient >= 5.1.0
+Requires:       python3-oslo-config >= 2:5.2.0
+Requires:       python3-openstackclient >= 3.3.0
+Requires:       python3-pbr >= 2.0.0
+Requires:       python3-six >= 1.10.0
+Requires:       python3-sqlalchemy >= 1.0.10
+Requires:       python3-defusedxml >= 0.5.0
+Requires:       python3-oslo-concurrency >= 3.26.0
+Requires:       python3-oslo-privsep >= 1.32.0
+Requires:       python3-pyroute2 >= 0.5.7
+Requires:       openstack-%{service}-common >= 1:16.0.0
 
-# Handle python2 exception
-%if %{pyver} == 2
-Requires:       python-lxml
-Requires:       python-zmq
-%else
-Requires:       python%{pyver}-lxml
-Requires:       python%{pyver}-zmq
-%endif
+Requires:       python3-zmq
 
-%description -n python%{pyver}-%{package_name}
+%description -n python3-%{package_name}
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 
 %prep
 %setup -q -n %{package_name}-%{upstream_version}
 
 %build
-%{pyver_build}
-#%{pyver_bin} setup.py build_sphinx
+%{py3_build}
+#%{__python3} setup.py build_sphinx
 #rm %{docpath}/.buildinfo
 
 %install
 export PBR_VERSION=%{version}
-%{pyver_install}
+%{py3_install}
 
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/eswitchd
@@ -112,7 +91,7 @@ install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/eswitchd.service
 
 
 # Remove unused files
-rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
+rm -rf %{buildroot}%{python3_sitelib}/networking_mlnx/hacking
 
 
 %post
@@ -130,11 +109,11 @@ rm -rf %{buildroot}%{python_sitelib}/networking_mlnx/hacking
 %systemd_postun_with_restart eswitchd.service
 
 
-%files -n python%{pyver}-%{package_name}
+%files -n python3-%{package_name}
 %license LICENSE
 %doc README.rst
-%{pyver_sitelib}/%{srcname}
-%{pyver_sitelib}/%{srcname}-%{version}-*.egg-info
+%{python3_sitelib}/%{srcname}
+%{python3_sitelib}/%{srcname}-%{version}-*.egg-info
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*
 
