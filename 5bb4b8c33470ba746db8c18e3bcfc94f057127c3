@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75160439_d6dc5aca",
+        "filename": "python-networking-mlnx.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 534
+      },
+      "writtenOn": "2020-04-09T19:45:15Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be \u003e\u003d 0.5.7 as is in u/s project https://opendev.org/x/networking-mlnx/src/branch/master/requirements.txt#L11 and in Neutron too?",
+      "revId": "5bb4b8c33470ba746db8c18e3bcfc94f057127c3",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
