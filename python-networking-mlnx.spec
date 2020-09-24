@@ -45,17 +45,17 @@ Summary: Mellanox OpenStack Neutron driver
 Requires:       python3-babel >= 1.3
 Requires:       python3-eventlet >= 0.18.2
 Requires:       python3-netaddr >= 0.7.18
-Requires:       python3-neutron-lib >= 1.28.0
-Requires:       python3-neutronclient >= 5.1.0
+Requires:       python3-neutron-lib >= 2.4.0
+Requires:       python3-neutronclient >= 6.7.0
 Requires:       python3-oslo-config >= 2:5.2.0
 Requires:       python3-openstackclient >= 3.3.0
-Requires:       python3-pbr >= 2.0.0
+Requires:       python3-pbr >= 4.0.0
 Requires:       python3-six >= 1.10.0
-Requires:       python3-sqlalchemy >= 1.0.10
+Requires:       python3-sqlalchemy >= 1.2.0
 Requires:       python3-defusedxml >= 0.5.0
 Requires:       python3-oslo-concurrency >= 3.26.0
 Requires:       python3-oslo-privsep >= 1.32.0
-Requires:       python3-pyroute2 >= 0.5.6
+Requires:       python3-pyroute2 >= 0.5.7
 Requires:       openstack-%{service}-common >= 1:16.0.0
 
 Requires:       python3-zmq
