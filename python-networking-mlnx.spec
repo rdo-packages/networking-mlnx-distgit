@@ -6,8 +6,8 @@
 %global service neutron
 
 Name:           python-%{package_name}
-Version:        XXX
-Release:        XXX
+Version:        16.0.0
+Release:        1%{?dist}
 Summary:        %{drv_vendor} OpenStack Neutron driver
 Obsoletes:      openstack-%{service}-mellanox
 
@@ -130,3 +130,6 @@ rm -rf %{buildroot}%{python3_sitelib}/networking_mlnx/hacking
 %attr(0640, root, %{service}) /etc/neutron/rootwrap.d/eswitchd.filters
 
 %changelog
+* Mon Oct 11 2021 RDO <dev@lists.rdoproject.org> 16.0.0-1
+- Update to 16.0.0
+
