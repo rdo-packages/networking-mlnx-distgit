@@ -52,6 +52,7 @@ Requires:       python3-openstackclient >= 3.3.0
 Requires:       python3-pbr >= 4.0.0
 Requires:       python3-six >= 1.10.0
 Requires:       python3-sqlalchemy >= 1.2.0
+Requires:       python3-sqlalchemy < 1.4.0
 Requires:       python3-defusedxml >= 0.5.0
 Requires:       python3-oslo-concurrency >= 3.26.0
 Requires:       python3-oslo-privsep >= 1.32.0
