@@ -1,4 +1,6 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+# we are excluding some BRs from automatic generator
+%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order
 %global drv_vendor Mellanox
 %global srcname networking_mlnx
 %global package_name networking-mlnx
@@ -11,7 +13,7 @@ Release:        XXX
 Summary:        %{drv_vendor} OpenStack Neutron driver
 Obsoletes:      openstack-%{service}-mellanox
 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
 Source0:        https://pypi.io/packages/source/n/%{package_name}/%{package_name}-%{upstream_version}.tar.gz
 Source1:        %{service}-mlnx-agent.service
@@ -20,45 +22,19 @@ Source2:        eswitchd.service
 
 BuildArch:      noarch
 BuildRequires:  python3-devel
-BuildRequires:  python3-mock
+BuildRequires:  pyproject-rpm-macros
 BuildRequires:  python3-neutron-tests
-BuildRequires:  python3-oslo-sphinx
-BuildRequires:  python3-pbr
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-sphinx
-BuildRequires:  python3-testrepository
-BuildRequires:  python3-testtools
 BuildRequires:  systemd
-%if 0%{?rhel} && 0%{?rhel} < 8
-%{?systemd_requires}
-%else
-%{?systemd_ordering} # does not exist on EL7
-%endif
+
+%{?systemd_ordering}
 
 %description
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 
 %package -n python3-%{package_name}
 Summary: Mellanox OpenStack Neutron driver
-%{?python_provide:%python_provide python3-%{package_name}}
 
-Requires:       python3-babel >= 1.3
-Requires:       python3-eventlet >= 0.18.2
-Requires:       python3-netaddr >= 0.7.18
-Requires:       python3-neutron-lib >= 2.4.0
-Requires:       python3-neutronclient >= 6.7.0
-Requires:       python3-oslo-config >= 2:5.2.0
-Requires:       python3-openstackclient >= 3.3.0
-Requires:       python3-pbr >= 4.0.0
-Requires:       python3-six >= 1.10.0
-Requires:       python3-sqlalchemy >= 1.2.0
-Requires:       python3-defusedxml >= 0.5.0
-Requires:       python3-oslo-concurrency >= 3.26.0
-Requires:       python3-oslo-privsep >= 1.32.0
-Requires:       python3-pyroute2 >= 0.5.7
 Requires:       openstack-%{service}-common >= 1:16.0.0
-
-Requires:       python3-zmq
 
 %description -n python3-%{package_name}
 This package contains %{drv_vendor} networking driver for OpenStack Neutron.
@@ -66,14 +42,28 @@ This package contains %{drv_vendor} networking driver for OpenStack Neutron.
 %prep
 %setup -q -n %{package_name}-%{upstream_version}
 
+sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
+sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
+sed -i /^minversion.*/d tox.ini
+sed -i /^requires.*virtualenv.*/d tox.ini
+
+# Exclude some bad-known BRs
+for pkg in %{excluded_brs}; do
+  for reqfile in doc/requirements.txt test-requirements.txt; do
+    if [ -f $reqfile ]; then
+      sed -i /^${pkg}.*/d $reqfile
+    fi
+  done
+done
+
+%generate_buildrequires
+%pyproject_buildrequires -t -e %{default_toxenv},docs
+
 %build
-%{py3_build}
-#%{__python3} setup.py build_sphinx
-#rm %{docpath}/.buildinfo
+%pyproject_wheel
 
 %install
-export PBR_VERSION=%{version}
-%{py3_install}
+%pyproject_install
 
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/eswitchd
@@ -113,7 +103,7 @@ rm -rf %{buildroot}%{python3_sitelib}/networking_mlnx/hacking
 %license LICENSE
 %doc README.rst
 %{python3_sitelib}/%{srcname}
-%{python3_sitelib}/%{srcname}-%{version}-*.egg-info
+%{python3_sitelib}/%{srcname}-%{version}-*.dist-info
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*
 
