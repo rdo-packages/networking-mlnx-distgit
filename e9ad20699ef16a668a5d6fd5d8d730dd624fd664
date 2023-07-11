@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "e9ad20699ef16a668a5d6fd5d8d730dd624fd664",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb36e34_a189b073",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-07-11T15:02:39Z",
+      "side": 1,
+      "message": "This line [1] is making the script pyproject_buildrequires.py fail\n\n[1] https://opendev.org/x/networking-mlnx/src/branch/master/tox.ini#L155",
+      "revId": "e9ad20699ef16a668a5d6fd5d8d730dd624fd664",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
