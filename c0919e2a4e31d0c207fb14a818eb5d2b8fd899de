@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3204b84_1d762021",
+        "filename": "python-networking-mlnx.spec",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2023-07-31T15:03:39Z",
+      "side": 1,
+      "message": "we are losing alembic_migration files:\n\nhttps://logserver.rdoproject.org/80/49180/7/check/DLRN-rpmbuild-centos9-compare-files/c0a30a0/job-output.txt\n\nuse autosetup here:\n\n%autosetup -n %{package_name}-%{upstream_version} -S git",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 11
+      },
+      "revId": "c0919e2a4e31d0c207fb14a818eb5d2b8fd899de",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
