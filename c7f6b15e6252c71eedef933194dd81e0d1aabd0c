@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3d48e5_087f41bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2024-09-25T12:37:16Z",
+      "side": 1,
+      "message": "waiting for https://review.rdoproject.org/r/c/openstack/networking-mlnx-distgit/+/54574 to be merged before",
+      "revId": "c7f6b15e6252c71eedef933194dd81e0d1aabd0c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
