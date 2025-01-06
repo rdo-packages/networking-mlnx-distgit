@@ -11,7 +11,6 @@ Name:           python-%{package_name}
 Version:        XXX
 Release:        XXX
 Summary:        %{drv_vendor} OpenStack Neutron driver
-Obsoletes:      openstack-%{service}-mellanox
 
 License:        Apache-2.0
 URL:            https://pypi.python.org/pypi/%{package_name}
@@ -52,6 +51,7 @@ sed -i '/^\[testenv\:py3-dev\]/,+4d' tox.ini
 sed -i '/^\[testenv\:pep8-dev\]/,+6d' tox.ini
 sed -i '/hacking*/d' tox.ini
 sed -i '/\# Using neutron master/,+4d' requirements.txt
+sed -i '/^  {toxinidir}$/d' tox.ini
 
 # Exclude some bad-known BRs
 for pkg in %{excluded_brs}; do
