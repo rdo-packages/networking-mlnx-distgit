@@ -17,7 +17,6 @@ Source0:        https://pypi.io/packages/source/n/%{package_name}/%{package_name
 Source1:        %{service}-mlnx-agent.service
 Source2:        eswitchd.service
 
-
 BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-mock
